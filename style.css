@@ -1,0 +1,231 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #e8e8e8;
+  color: #202020;
+}
+
+header {
+  text-align: center;
+  padding: 18px 20px 12px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(18px, 2.1vw, 27px);
+  font-weight: 700;
+}
+
+.author {
+  margin-top: 7px;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.app {
+  width: min(1500px, calc(100% - 28px));
+  margin: 0 auto 18px;
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 18px;
+}
+
+.control-panel,
+.scope-panel {
+  background: #f2f2f2;
+  border: 1px solid #a9a9a9;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.12);
+}
+
+.control-panel {
+  padding: 16px 15px 14px;
+}
+
+.control-panel h2 {
+  font-size: 18px;
+  margin: 0 0 22px;
+}
+
+.parameter {
+  margin-bottom: 24px;
+}
+
+.param-head {
+  display: grid;
+  grid-template-columns: 1fr 92px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+}
+
+.param-head label {
+  font-size: 13px;
+}
+
+.param-head input[type="number"] {
+  width: 92px;
+  height: 29px;
+  padding: 3px 6px;
+  border: 1px solid #999;
+  border-radius: 3px;
+  background: white;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: #444;
+}
+
+.scope-controls {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 12px 10px 9px;
+  margin-top: 4px;
+}
+
+.scope-controls h3 {
+  font-size: 15px;
+  margin: 0 0 12px;
+}
+
+.scope-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.scope-row label {
+  font-size: 12px;
+}
+
+.scope-row select {
+  width: 100%;
+  height: 29px;
+  background: white;
+  border: 1px solid #999;
+  border-radius: 3px;
+}
+
+#resetButton {
+  display: block;
+  width: 150px;
+  margin: 18px auto 0;
+  height: 36px;
+  border: 1px solid #777;
+  border-radius: 4px;
+  background: #dedede;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#resetButton:hover {
+  background: #d0d0d0;
+}
+
+.scope-panel {
+  padding: 0 14px 14px;
+  overflow: hidden;
+}
+
+.scope-title {
+  text-align: center;
+  font-size: 19px;
+  font-weight: bold;
+  padding: 10px 0 7px;
+}
+
+.channel-indicators {
+  display: flex;
+  gap: 42px;
+  padding: 0 12px 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.plots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+
+.plot-card {
+  background: white;
+  border: 1px solid #999;
+  min-height: 300px;
+  position: relative;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+footer {
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+  padding-bottom: 14px;
+}
+
+@media (max-width: 1000px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .plots {
+    grid-template-columns: 1fr;
+  }
+
+  .plot-card {
+    min-height: 320px;
+  }
+}
+
+
+/* Circuit analysis panel */
+.analysis-panel {
+  grid-column: 1 / -1;
+  background: #f2f2f2;
+  border: 1px solid #a9a9a9;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.12);
+  padding: 14px 16px 16px;
+}
+.analysis-title { text-align:center; font-size:17px; font-weight:bold; padding:2px 0 12px; letter-spacing:.7px; }
+.analysis-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; }
+.analysis-card { min-height:92px; padding:10px 7px; border:1px solid #aaa; border-radius:4px; background:#fff; text-align:center; display:flex; flex-direction:column; justify-content:center; gap:3px; }
+.analysis-label { color:#555; font-size:11px; line-height:1.2; }
+.analysis-symbol { color:#222; font-size:15px; font-weight:bold; }
+.analysis-card strong { color:#111; font-size:19px; line-height:1.15; }
+.analysis-unit { color:#666; font-size:10px; }
+.resonance-indicator { margin-top:12px; padding:11px 14px; border:1px solid #aaa; border-radius:4px; background:#fff; transition:.15s ease; }
+.resonance-status { display:flex; align-items:center; justify-content:center; gap:9px; color:#444; font-size:14px; font-weight:bold; letter-spacing:.8px; }
+.status-light { width:11px; height:11px; border-radius:50%; background:#888; display:inline-block; }
+.resonance-detail { margin-top:5px; color:#666; font-size:11px; text-align:center; }
+.resonance-indicator.at-resonance {
+  border-color:#ff3b30;
+  background:#3a0d0d;
+  box-shadow:0 0 18px rgba(255,59,48,.35);
+}
+.resonance-indicator.at-resonance .status-light {
+  background:#ff3b30;
+  box-shadow:0 0 12px rgba(255,59,48,.95);
+}
+.resonance-indicator.at-resonance .resonance-status {
+  color:#ff6b61;
+}
+.resonance-indicator.at-resonance .resonance-detail {
+  color:#ffd1ce;
+}
+@media (max-width:1000px) { .analysis-grid { grid-template-columns:repeat(3,1fr); } }
+@media (max-width:600px) { .analysis-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:400px) { .analysis-grid { grid-template-columns:1fr; } }

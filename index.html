@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RLC Oscilloscope Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>OSCILLOSCOPE SIMULATOR DISPLAYING DATA FROM A SERIES RLC CIRCUIT</h1>
+    <div class="author">By Miguel Nieto</div>
+  </header>
+
+  <main class="app">
+    <aside class="control-panel">
+      <h2>Circuit Parameters</h2>
+
+      <section class="parameter">
+        <div class="param-head">
+          <label for="rSlider">Resistance R (Ω)</label>
+          <input id="rValue" type="number" min="1000" max="50000" step="100" value="1000">
+        </div>
+        <input id="rSlider" type="range" min="1000" max="50000" step="100" value="1000">
+      </section>
+
+      <section class="parameter">
+        <div class="param-head">
+          <label for="lSlider">Inductance L (mH)</label>
+          <input id="lValue" type="number" min="1" max="10" step="0.1" value="10">
+        </div>
+        <input id="lSlider" type="range" min="1" max="10" step="0.1" value="10">
+      </section>
+
+      <section class="parameter">
+        <div class="param-head">
+          <label for="cSlider">Capacitance C (pF)</label>
+          <input id="cValue" type="number" min="100" max="5000" step="10" value="1000">
+        </div>
+        <input id="cSlider" type="range" min="100" max="5000" step="10" value="1000">
+      </section>
+
+      <section class="parameter">
+        <div class="param-head">
+          <label for="fSlider">Frequency f (Hz)</label>
+          <input id="fValue" type="number" min="10" max="1000000" step="1" value="1000">
+        </div>
+        <input id="fSlider" type="range" min="10" max="1000000" step="1" value="1000">
+      </section>
+
+      <section class="parameter">
+        <div class="param-head">
+          <label for="vSlider">Source Voltage V (RMS)</label>
+          <input id="vValue" type="number" min="0.1" max="20" step="0.1" value="5">
+        </div>
+        <input id="vSlider" type="range" min="0.1" max="20" step="0.1" value="5">
+      </section>
+
+      <section class="scope-controls">
+        <h3>Oscilloscope Controls</h3>
+
+        <div class="scope-row">
+          <label for="timeDiv">TIME/DIV</label>
+          <select id="timeDiv">
+            <option value="0.01">10 µs/div</option>
+            <option value="0.02">20 µs/div</option>
+            <option value="0.05">50 µs/div</option>
+            <option value="0.1">0.1 ms/div</option>
+            <option value="0.2">0.2 ms/div</option>
+            <option value="0.5" selected>0.5 ms/div</option>
+            <option value="1">1.0 ms/div</option>
+            <option value="2">2.0 ms/div</option>
+            <option value="5">5.0 ms/div</option>
+            <option value="10">10.0 ms/div</option>
+            <option value="20">20.0 ms/div</option>
+            <option value="50">50.0 ms/div</option>
+          </select>
+        </div>
+
+        <div class="scope-row">
+          <label for="voltDiv">CH1 V/DIV</label>
+          <select id="voltDiv">
+            <option value="0.1">0.1 V/div</option>
+            <option value="0.2">0.2 V/div</option>
+            <option value="0.5">0.5 V/div</option>
+            <option value="1">1.0 V/div</option>
+            <option value="2" selected>2.0 V/div</option>
+            <option value="5">5.0 V/div</option>
+            <option value="10">10 V/div</option>
+            <option value="20">20 V/div</option>
+          </select>
+        </div>
+
+        <div class="scope-row">
+          <label for="currDiv">CH2 A/DIV</label>
+          <select id="currDiv">
+            <option value="0.0005">0.0005 A/div</option>
+            <option value="0.001">0.001 A/div</option>
+            <option value="0.002">0.002 A/div</option>
+            <option value="0.005">0.005 A/div</option>
+            <option value="0.01">0.01 A/div</option>
+            <option value="0.02" selected>0.02 A/div</option>
+            <option value="0.05">0.05 A/div</option>
+            <option value="0.1">0.1 A/div</option>
+            <option value="0.2">0.2 A/div</option>
+          </select>
+        </div>
+      </section>
+
+      <button id="resetButton">RESET</button>
+    </aside>
+
+    <section class="scope-panel">
+      <div class="scope-title">OSCILLOSCOPE</div>
+      <div class="channel-indicators">
+        <span>CH1: VOLTAGE</span>
+        <span>CH2: CURRENT</span>
+      </div>
+
+      <div class="plots">
+        <div class="plot-card"><canvas id="plot1"></canvas></div>
+        <div class="plot-card"><canvas id="plot2"></canvas></div>
+        <div class="plot-card"><canvas id="plot3"></canvas></div>
+        <div class="plot-card"><canvas id="plot4"></canvas></div>
+      </div>
+    </section>
+    <section class="analysis-panel">
+      <div class="analysis-title">CIRCUIT ANALYSIS</div>
+      <div class="analysis-grid">
+        <div class="analysis-card"><span class="analysis-label">Inductive Reactance</span><span class="analysis-symbol">X<sub>L</sub></span><strong id="xlValue">—</strong><span class="analysis-unit">Ω</span></div>
+        <div class="analysis-card"><span class="analysis-label">Capacitive Reactance</span><span class="analysis-symbol">X<sub>C</sub></span><strong id="xcValue">—</strong><span class="analysis-unit">Ω</span></div>
+        <div class="analysis-card"><span class="analysis-label">Impedance Magnitude</span><span class="analysis-symbol">|Z|</span><strong id="zValue">—</strong><span class="analysis-unit">Ω</span></div>
+        <div class="analysis-card"><span class="analysis-label">RMS Current</span><span class="analysis-symbol">I<sub>RMS</sub></span><strong id="irmsValue">—</strong><span class="analysis-unit">A</span></div>
+        <div class="analysis-card"><span class="analysis-label">Circuit Phase</span><span class="analysis-symbol">φ</span><strong id="phaseValue">—</strong><span class="analysis-unit">deg</span></div>
+        <div class="analysis-card"><span class="analysis-label">Resonant Frequency</span><span class="analysis-symbol">f<sub>0</sub></span><strong id="resonantFreqValue">—</strong><span class="analysis-unit">Hz</span></div>
+      </div>
+      <div id="resonanceIndicator" class="resonance-indicator">
+        <div class="resonance-status"><span class="status-light"></span><span id="resonanceText">AWAY FROM RESONANCE</span></div>
+        <div id="resonanceDetail" class="resonance-detail">Adjust frequency until X<sub>L</sub> = X<sub>C</sub>.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Series RLC Circuit • Interactive Oscilloscope Simulation
+  </footer>
+
+  <script src="simulator.js"></script>
+</body>
+</html>
